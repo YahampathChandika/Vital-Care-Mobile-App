@@ -8,10 +8,17 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,6 +43,10 @@ fun DashboardScreen(user: User) {
     val patients = remember { JsonUtil.loadPatients(context) }
 
     val scrollState = rememberScrollState()
+    val searchQuery = remember { mutableStateOf("") }
+    val filteredPatients = patients.filter { patient ->
+        patient.name.contains(searchQuery.value, ignoreCase = true)
+    }
 
     Column(
         modifier = Modifier
@@ -283,6 +294,29 @@ fun DashboardScreen(user: User) {
             }
         }
 
+        @OptIn(ExperimentalMaterial3Api::class)
+        OutlinedTextField(
+            value = searchQuery.value,
+            onValueChange = { searchQuery.value = it },
+            label = { Text("Search Patients") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 20.dp),
+            shape = RoundedCornerShape(12.dp),
+            trailingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = "Search Icon",
+                    tint = colorResource(id = R.color.lgray),
+                    modifier = Modifier.size(30.dp)
+                )
+            },
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = colorResource(id = R.color.lgray),  // Border color when focused
+                unfocusedBorderColor = colorResource(id = R.color.lgray)  // Border color when unfocused
+            )
+        )
+
 
         // Patient list section
         Column(modifier = Modifier.padding(top = 20.dp)) {
@@ -295,7 +329,7 @@ fun DashboardScreen(user: User) {
             )
 
             // Display patient list
-            patients.forEach { patient ->
+            filteredPatients.forEach { patient ->
                 PatientCard(patient = patient)
             }
         }
