@@ -3,8 +3,10 @@ package com.example.vitalcare.ui.screens
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -26,10 +28,10 @@ import com.example.vitalcare.data.Patient
 import com.example.vitalcare.util.JsonUtil
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.io.File
+import java.util.UUID
 
 @Composable
-fun AddPatientScreen(navController: NavController, context: Context) {
+fun AddPatientScreen(navController: NavController, context: Context = LocalContext.current) {
     // State variables for form inputs
     var name by remember { mutableStateOf("") }
     var age by remember { mutableStateOf("") }
@@ -47,6 +49,7 @@ fun AddPatientScreen(navController: NavController, context: Context) {
     var alertsError by remember { mutableStateOf<String?>(null) }
     var bedError by remember { mutableStateOf<String?>(null) }
     var statusError by remember { mutableStateOf<String?>(null) }
+    val scrollState = rememberScrollState()
 
     // Function to validate form inputs
     fun validateInputs(): Boolean {
@@ -106,26 +109,32 @@ fun AddPatientScreen(navController: NavController, context: Context) {
 
     // Function to save a patient to the JSON file
     fun savePatient() {
-        val newPatient = Patient(
-            id = (JsonUtil.loadPatients(context).size + 1).toString(), // Generate new ID
-            name = name,
-            age = age.toInt(),
-            gender = gender,
-            diagnosis = diagnosis,
-            alerts = alerts.toInt(),
-            bed = bed.toInt(),
-            status = status
-        )
-        val patients = JsonUtil.loadPatients(context).toMutableList()
-        patients.add(newPatient)
-        JsonUtil.savePatients(context, patients)
+        try {
+            val newPatient = Patient(
+                id = UUID.randomUUID().toString(), // Generate unique ID
+                name = name,
+                age = age.toInt(),
+                gender = gender,
+                diagnosis = diagnosis,
+                alerts = alerts.toInt(),
+                bed = bed.toInt(),
+                status = status
+            )
+            val patients = JsonUtil.loadPatients(context).toMutableList()
+            patients.add(newPatient)
+            JsonUtil.savePatients(context, patients)
+        } catch (e: Exception) {
+            // Handle error (e.g., show a Toast or Snackbar with an error message)
+            println("Error saving patient: ${e.message}")
+        }
     }
-
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(24.dp),
+            .verticalScroll(scrollState)
+            .padding(24.dp)
+            .imePadding(),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -160,7 +169,8 @@ fun AddPatientScreen(navController: NavController, context: Context) {
             fontSize = 24.sp,
             fontWeight = FontWeight.W500,
             color = colorResource(id = R.color.dblue),
-             modifier = Modifier.padding(bottom = 24.dp))
+            modifier = Modifier.padding(bottom = 24.dp)
+        )
 
         // Form fields with basic styling
         OutlinedTextField(
@@ -271,14 +281,15 @@ fun AddPatientScreen(navController: NavController, context: Context) {
             onClick = {
                 if (validateInputs()) {
                     savePatient()
-                    navController.popBackStack() // Navigate back to the dashboard
+                    navController.popBackStack() // Navigate back to the previous screen
                 }
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = colorResource(id = R.color.lblue),
                 contentColor = Color.White
             ),
-            modifier = Modifier.padding(top = 16.dp)
+            modifier = Modifier
+                .padding(top = 16.dp)
                 .width(250.dp)
         ) {
             Text(text = "Save")

@@ -2,15 +2,19 @@ package com.example.vitalcare.ui.screens
 
 import android.content.Context
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,23 +36,33 @@ fun LoginScreen(context: Context, onLoginSuccess: (User) -> Unit = {}) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 30.dp, vertical = 60.dp),
-        verticalArrangement = Arrangement.SpaceBetween
+            .padding(horizontal = 30.dp, vertical = 50.dp)
+            .imePadding(),
+        verticalArrangement = Arrangement.SpaceBetween,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.logo),
+            contentDescription = "Logo",
+            modifier = Modifier
+                .width(200.dp)
+                .padding(top = 25.dp)
+
+        )
+
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 60.dp),
+                .fillMaxWidth(),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Welcome Back!",
-                color = colorResource(id = R.color.dblue),
-                fontSize = 30.sp,
-                fontWeight = FontWeight.W500,
-                modifier = Modifier.padding(bottom = 12.dp)
-            )
+//            Text(
+//                text = "Welcome Back!",
+//                color = colorResource(id = R.color.dblue),
+//                fontSize = 30.sp,
+//                fontWeight = FontWeight.W500,
+//                modifier = Modifier.padding(bottom = 12.dp)
+//            )
 
             Text(
                 text = "We are happy to see you again",

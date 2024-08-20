@@ -3,6 +3,7 @@ package com.example.vitalcare.ui.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -40,6 +41,7 @@ import com.example.vitalcare.data.Patient
 import com.example.vitalcare.data.User
 import com.example.vitalcare.navigation.NavRoutes
 import com.example.vitalcare.util.JsonUtil
+import com.google.gson.Gson
 
 @Composable
 fun DashboardScreen(user: User, navController: NavController) {
@@ -358,7 +360,11 @@ fun DashboardScreen(user: User, navController: NavController) {
 
             // Display patient list
             filteredPatients.forEach { patient ->
-                PatientCard(patient = patient)
+                PatientCard(patient = patient) { selectedPatient ->
+                    // Navigate to patient detail screen
+                    val jsonPatient = Gson().toJson(selectedPatient)
+                    navController.navigate("${NavRoutes.PatientDetail}/$jsonPatient")
+                }
             }
         }
 
@@ -366,13 +372,15 @@ fun DashboardScreen(user: User, navController: NavController) {
 }
 
 @Composable
-fun PatientCard(patient: Patient) {
+fun PatientCard(patient: Patient, onClick: (Patient) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 10.dp),
+            .padding(vertical = 10.dp)
+            .clickable { onClick(patient) },  // Make the card clickable
         elevation = CardDefaults.elevatedCardElevation(2.dp),
     ) {
+        // Existing content
         Column(
             modifier = Modifier
                 .border(
@@ -386,7 +394,7 @@ fun PatientCard(patient: Patient) {
                     horizontal = 20.dp,
                     vertical = 15.dp
                 )
-        ){
+        ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
