@@ -10,6 +10,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -31,13 +33,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.vitalcare.R
 import com.example.vitalcare.data.Patient
 import com.example.vitalcare.data.User
+import com.example.vitalcare.navigation.NavRoutes
 import com.example.vitalcare.util.JsonUtil
 
 @Composable
-fun DashboardScreen(user: User) {
+fun DashboardScreen(user: User, navController: NavController) {
     // Load patient data
     val context = LocalContext.current
     val patients = remember { JsonUtil.loadPatients(context) }
@@ -320,13 +324,36 @@ fun DashboardScreen(user: User) {
 
         // Patient list section
         Column(modifier = Modifier.padding(top = 20.dp)) {
-            Text(
-                text = "Patient Details",
-                color = colorResource(id = R.color.lblack),
-                fontSize = 16.sp,
-                fontWeight = FontWeight.W500,
-                modifier = Modifier.padding(vertical = 10.dp)
-            )
+            // Patient list section with "Add Patient" button
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 20.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Patient Details",
+                    color = colorResource(id = R.color.lblack),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.W500,
+                    modifier = Modifier.padding(vertical = 10.dp)
+                )
+
+                Button(
+                    onClick = {
+                        navController.navigate(NavRoutes.AddPatient)
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colorResource(id = R.color.lblue),
+                        contentColor = Color.White
+                    ),
+                    modifier = Modifier.padding(vertical = 10.dp)
+                ) {
+                    Text(text = "Add Patient")
+                }
+
+            }
 
             // Display patient list
             filteredPatients.forEach { patient ->
@@ -442,13 +469,13 @@ fun PatientCard(patient: Patient) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DashboardScreenPreview() {
-    DashboardScreen(user = User(
-        username = "admin",
-        password = "1234",
-        name = "Dr.Jane Doe",
-        role = "Chief Surgeon"
-    ))
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun DashboardScreenPreview() {
+//    DashboardScreen(user = User(
+//        username = "admin",
+//        password = "1234",
+//        name = "Dr.Jane Doe",
+//        role = "Chief Surgeon"
+//    ))
+//}

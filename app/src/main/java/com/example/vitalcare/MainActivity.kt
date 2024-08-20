@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.vitalcare.data.User
 import com.example.vitalcare.navigation.NavRoutes
+import com.example.vitalcare.ui.screens.AddPatientScreen
 import com.example.vitalcare.ui.screens.DashboardScreen
 import com.example.vitalcare.ui.screens.LoginScreen
 import com.example.vitalcare.ui.theme.VitalCareTheme
@@ -32,10 +33,13 @@ class MainActivity : ComponentActivity() {
                     }
                     composable("${NavRoutes.Dashboard}/{userJson}") { backStackEntry ->
                         val userJson = backStackEntry.arguments?.getString("userJson")
-                        val loggedInUser = Gson().fromJson(userJson, User::class.java)
-                        if (loggedInUser != null) {
-                            DashboardScreen(user = loggedInUser)
+                        val user = Gson().fromJson(userJson, User::class.java)
+                        if (user != null) {
+                            DashboardScreen(user = user, navController = navController)
                         }
+                    }
+                    composable(NavRoutes.AddPatient) {
+                        AddPatientScreen(navController = navController)
                     }
                 }
             }
