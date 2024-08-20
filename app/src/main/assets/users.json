@@ -1,5 +1,4 @@
-{
-    "users": [
+[
         {
             "username": "admin",
             "password": "1234",
@@ -12,5 +11,4 @@
             "name": "Dr.Bob Smith",
             "role": "General Practitioner"
         }
-    ]
-}
+]

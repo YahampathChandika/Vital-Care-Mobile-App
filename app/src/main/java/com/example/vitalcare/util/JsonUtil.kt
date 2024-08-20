@@ -12,11 +12,9 @@ object JsonUtil {
         val inputStream = context.assets.open("users.json")
         val reader = InputStreamReader(inputStream)
 
-        // Use a map to get the "users" array from the JSON object
-        val userMapType = object : TypeToken<Map<String, List<User>>>() {}.type
-        val userMap: Map<String, List<User>> = Gson().fromJson(reader, userMapType)
-
-        return userMap["users"] ?: emptyList()
+        // Directly parse the JSON array of users
+        val userType = object : TypeToken<List<User>>() {}.type
+        return Gson().fromJson(reader, userType)
     }
 
     fun loadPatients(context: Context): List<Patient> {
@@ -25,4 +23,3 @@ object JsonUtil {
         return Gson().fromJson(json, patientType)
     }
 }
-
