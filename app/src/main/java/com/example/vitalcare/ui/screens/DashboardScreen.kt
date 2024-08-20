@@ -34,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.vitalcare.R
 import com.example.vitalcare.data.Patient
 import com.example.vitalcare.data.User
@@ -469,13 +470,19 @@ fun PatientCard(patient: Patient) {
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun DashboardScreenPreview() {
-//    DashboardScreen(user = User(
-//        username = "admin",
-//        password = "1234",
-//        name = "Dr.Jane Doe",
-//        role = "Chief Surgeon"
-//    ))
-//}
+@Preview(showBackground = true)
+@Composable
+fun DashboardScreenPreview() {
+    val mockUser = User(
+        username = "admin",
+        password = "1234",
+        name = "Dr. Jane Doe",
+        role = "Chief Surgeon"
+    )
+
+    // Since NavController cannot be used directly in previews, we use a mock or placeholder
+    val mockNavController = rememberNavController()
+
+    // DashboardScreen is previewed with mock user and mock navigation controller
+    DashboardScreen(user = mockUser, navController = mockNavController)
+}

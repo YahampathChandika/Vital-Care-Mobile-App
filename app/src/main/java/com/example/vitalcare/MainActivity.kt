@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                     composable(NavRoutes.AddPatient) {
-                        AddPatientScreen(navController = navController)
+                        AddPatientScreen(context = this@MainActivity, navController = navController)
                     }
                 }
             }
