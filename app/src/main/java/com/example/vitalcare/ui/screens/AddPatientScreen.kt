@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
@@ -140,8 +141,8 @@ fun AddPatientScreen(navController: NavController, context: Context = LocalConte
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 30.dp),
+                .fillMaxWidth(),
+//                .padding(vertical = 30.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -167,9 +168,9 @@ fun AddPatientScreen(navController: NavController, context: Context = LocalConte
         Text(
             text = "Add Patient",
             fontSize = 24.sp,
-            fontWeight = FontWeight.W500,
+            fontWeight = FontWeight.W600,
             color = colorResource(id = R.color.dblue),
-            modifier = Modifier.padding(bottom = 24.dp)
+            modifier = Modifier.padding(vertical = 24.dp)
         )
 
         // Form fields with basic styling
@@ -178,11 +179,12 @@ fun AddPatientScreen(navController: NavController, context: Context = LocalConte
             onValueChange = { name = it },
             label = { Text("Name") },
             isError = nameError != null,
+            textStyle = TextStyle(color = colorResource(id = R.color.lblack)),
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
         )
         if (nameError != null) {
-            Text(text = nameError!!, color = MaterialTheme.colorScheme.error, fontSize = 12.sp)
+            Text(text = nameError!!, color = colorResource(id = R.color.red), fontSize = 12.sp)
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -192,12 +194,13 @@ fun AddPatientScreen(navController: NavController, context: Context = LocalConte
             onValueChange = { age = it },
             label = { Text("Age") },
             isError = ageError != null,
+            textStyle = TextStyle(color = colorResource(id = R.color.lblack)),
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
         )
         if (ageError != null) {
-            Text(text = ageError!!, color = MaterialTheme.colorScheme.error, fontSize = 12.sp)
+            Text(text = ageError!!, color = colorResource(id = R.color.red), fontSize = 12.sp)
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -207,12 +210,13 @@ fun AddPatientScreen(navController: NavController, context: Context = LocalConte
             onValueChange = { gender = it },
             label = { Text("Gender") },
             isError = genderError != null,
+            textStyle = TextStyle(color = colorResource(id = R.color.lblack)),
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
         )
         if (genderError != null) {
-            Text(text = genderError!!, color = MaterialTheme.colorScheme.error, fontSize = 12.sp)
+            Text(text = genderError!!, color = colorResource(id = R.color.red), fontSize = 12.sp)
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -222,12 +226,13 @@ fun AddPatientScreen(navController: NavController, context: Context = LocalConte
             onValueChange = { diagnosis = it },
             label = { Text("Diagnosis") },
             isError = diagnosisError != null,
+            textStyle = TextStyle(color = colorResource(id = R.color.lblack)),
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
         )
         if (diagnosisError != null) {
-            Text(text = diagnosisError!!, color = MaterialTheme.colorScheme.error, fontSize = 12.sp)
+            Text(text = diagnosisError!!, color = colorResource(id = R.color.red), fontSize = 12.sp)
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -237,12 +242,13 @@ fun AddPatientScreen(navController: NavController, context: Context = LocalConte
             onValueChange = { alerts = it },
             label = { Text("Alerts") },
             isError = alertsError != null,
+            textStyle = TextStyle(color = colorResource(id = R.color.lblack)),
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
         )
         if (alertsError != null) {
-            Text(text = alertsError!!, color = MaterialTheme.colorScheme.error, fontSize = 12.sp)
+            Text(text = alertsError!!, color = colorResource(id = R.color.red), fontSize = 12.sp)
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -252,12 +258,13 @@ fun AddPatientScreen(navController: NavController, context: Context = LocalConte
             onValueChange = { bed = it },
             label = { Text("Bed") },
             isError = bedError != null,
+            textStyle = TextStyle(color = colorResource(id = R.color.lblack)),
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
         )
         if (bedError != null) {
-            Text(text = bedError!!, color = MaterialTheme.colorScheme.error, fontSize = 12.sp)
+            Text(text = bedError!!, color = colorResource(id = R.color.red), fontSize = 12.sp)
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -267,12 +274,13 @@ fun AddPatientScreen(navController: NavController, context: Context = LocalConte
             onValueChange = { status = it },
             label = { Text("Status") },
             isError = statusError != null,
+            textStyle = TextStyle(color = colorResource(id = R.color.lblack)),
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
         )
         if (statusError != null) {
-            Text(text = statusError!!, color = MaterialTheme.colorScheme.error, fontSize = 12.sp)
+            Text(text = statusError!!, color = colorResource(id = R.color.red), fontSize = 12.sp)
         }
 
         Spacer(modifier = Modifier.height(16.dp))

@@ -3,6 +3,7 @@ package com.example.vitalcare.ui.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -49,8 +50,8 @@ fun PatientDetailScreen(patient: Patient, navController: NavController) {
         // Patient Header
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 30.dp),
+                .fillMaxWidth(),
+//                .padding(vertical = 30.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -78,7 +79,8 @@ fun PatientDetailScreen(patient: Patient, navController: NavController) {
             text = "Patient Details",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(vertical = 16.dp),
+            color = colorResource(id = R.color.dblue)
         )
 
         // Patient Details
@@ -87,41 +89,46 @@ fun PatientDetailScreen(patient: Patient, navController: NavController) {
             .fillMaxWidth()
             .padding(vertical = 10.dp),
         elevation = CardDefaults.elevatedCardElevation(2.dp),
-    ) {
-        // Existing content
-        Column(
-            modifier = Modifier
-                .border(
-                    width = 2.dp,
-                    color = colorResource(id = R.color.white),
-                    shape = RoundedCornerShape(12.dp)
-                )
-                .clip(RoundedCornerShape(12.dp)) // Clip to match the border shape
-                .background(color = colorResource(id = R.color.white))
-                .padding(
-                    horizontal = 20.dp,
-                    vertical = 15.dp
-                )
         ) {
-            Row(
+            // Existing content
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 10.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                ){
-                    Text( text = patient.status,
-                        fontWeight = FontWeight.Bold,
-                        color = when (patient.status) {
-                            "Critical" -> colorResource(id = R.color.red)
-                            "Stable" -> colorResource(id = R.color.green)
-                            "Unstable" -> colorResource(id = R.color.yellow)
-                            else -> Color.Black
-                        })
-                    Text(text = "Alerts | 0${patient.alerts}",
-                        color = colorResource(id = R.color.lblue),
+                    .border(
+                        width = 2.dp,
+                        color = colorResource(id = R.color.white),
+                        shape = RoundedCornerShape(12.dp)
                     )
-            }
-            Text(text = patient.name, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                    .clip(RoundedCornerShape(12.dp)) // Clip to match the border shape
+                    .background(color = colorResource(id = R.color.white))
+                    .padding(
+                        horizontal = 20.dp,
+                        vertical = 15.dp
+                    )
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 10.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    ){
+                        Text( text = patient.status,
+                            fontWeight = FontWeight.Bold,
+                            color = when (patient.status) {
+                                "Critical" -> colorResource(id = R.color.red)
+                                "Stable" -> colorResource(id = R.color.green)
+                                "Unstable" -> colorResource(id = R.color.yellow)
+                                else -> Color.Black
+                            })
+                        Text(text = "Alerts | 0${patient.alerts}",
+                            color = colorResource(id = R.color.lblue),
+                        )
+                }
+                Text(text =
+                patient.name,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp,
+                    color = colorResource(id = R.color.lblack)
+                )
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -136,11 +143,13 @@ fun PatientDetailScreen(patient: Patient, navController: NavController) {
                         )
                         Text(
                             text = "0${patient.bed}",
-                            fontSize = 18.sp)
+                            fontSize = 18.sp,
+                            color = colorResource(id = R.color.dgray)
+                        )
                     }
                     Column(
                         Modifier.width(80.dp),
-                        ) {
+                    ) {
                         Text(
                             text = "Diagnosis",
                             color = colorResource(id = R.color.lgray),
@@ -148,42 +157,48 @@ fun PatientDetailScreen(patient: Patient, navController: NavController) {
                         )
                         Text(
                             text = patient.diagnosis,
-                            fontSize = 18.sp)
+                            fontSize = 18.sp,
+                            color = colorResource(id = R.color.dgray)
+                        )
                     }
                 }
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 10.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ){
-                Column {
-                    Text(
-                        text = "Age",
-                        color = colorResource(id = R.color.lgray),
-                        modifier = Modifier.padding(top = 10.dp)
-                    )
-                    Text(
-                        text = patient.age.toString(),
-                        fontSize = 18.sp)
-                }
-                Column(
-                    Modifier.width(80.dp)
-                ) {
-                    Text(
-                        text = "Gender",
-                        color = colorResource(id = R.color.lgray),
-                        modifier = Modifier.padding(top = 10.dp)
-                    )
-                    Text(
-                        text = patient.gender,
-                        fontSize = 18.sp)
-                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 10.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ){
+                    Column {
+                        Text(
+                            text = "Age",
+                            color = colorResource(id = R.color.lgray),
+                            modifier = Modifier.padding(top = 10.dp)
+                        )
+                        Text(
+                            text = patient.age.toString(),
+                            fontSize = 18.sp,
+                            color = colorResource(id = R.color.dgray)
+                        )
+                    }
+                    Column(
+                        Modifier.width(80.dp)
+                    ) {
+                        Text(
+                            text = "Gender",
+                            color = colorResource(id = R.color.lgray),
+                            modifier = Modifier.padding(top = 10.dp)
+                        )
+                        Text(
+                            text = patient.gender,
+                            fontSize = 18.sp,
+                            color = colorResource(id = R.color.dgray)
+                        )
+                    }
 
+                }
             }
         }
-    }
 
         // Add Vitals Button
         Button(
@@ -192,8 +207,10 @@ fun PatientDetailScreen(patient: Patient, navController: NavController) {
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Blue, contentColor = Color.White)
+                .padding(vertical = 16.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = colorResource(id = R.color.lblue),
+                contentColor = Color.White)
         ) {
             Text(text = "Add Vitals")
         }
@@ -201,12 +218,17 @@ fun PatientDetailScreen(patient: Patient, navController: NavController) {
         // Vital Signs List
         if (vitalSigns.isNotEmpty()) {
             Text(
-                text = "Vital Signs",
-                fontSize = 20.sp,
+                text = "Vital Signs Data",
+                fontSize = 22.sp,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+                modifier = Modifier.padding(vertical = 16.dp),
+                color = colorResource(id = R.color.dblue)
             )
-            Column {
+            Column (Modifier
+                .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+
+            ){
                 vitalSigns.forEach { vitalSign ->
                     VitalSignCard(vitalSign = vitalSign)
                 }
@@ -223,14 +245,54 @@ fun PatientDetailScreen(patient: Patient, navController: NavController) {
 
 @Composable
 fun VitalSignCard(vitalSign: VitalSign) {
-    Card(modifier = Modifier.padding(bottom = 8.dp)) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text("Date: ${vitalSign.date}", fontWeight = FontWeight.Bold)
-            Text("Time: ${vitalSign.time}")
-            Text("Temperature: ${vitalSign.temperature}°C")
-            Text("Heart Rate: ${vitalSign.heartRate} bpm")
-            Text("Blood Pressure: ${vitalSign.bloodPressure}")
-            Text("Respiratory Rate: ${vitalSign.respiratoryRate} bpm")
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 10.dp),
+        elevation = CardDefaults.elevatedCardElevation(2.dp),
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .border(
+                    width = 2.dp,
+                    color = colorResource(id = R.color.white),
+                    shape = RoundedCornerShape(12.dp)
+                )
+                .clip(RoundedCornerShape(12.dp))
+                .background(color = colorResource(id = R.color.white))
+                .padding(
+                    horizontal = 20.dp,
+                    vertical = 15.dp
+                )
+        ) {
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 10.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(vitalSign.date, fontWeight = FontWeight.Bold, color = colorResource(id = R.color.lblack) )
+                Text(vitalSign.time, fontWeight = FontWeight.Bold, color = colorResource(id = R.color.lblack) )
+            }
+            Row(modifier = Modifier
+                .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Column {
+                    Text("Temperature:",color = colorResource(id = R.color.lblack))
+                    Text("Heart Rate:",color = colorResource(id = R.color.lblack))
+                    Text("Blood Pressure:",color = colorResource(id = R.color.lblack))
+                    Text("Respiratory Rate:",color = colorResource(id = R.color.lblack))
+
+                }
+                Column (horizontalAlignment = Alignment.End){
+                    Text("${vitalSign.temperature} bpm",color = colorResource(id = R.color.dgray))
+                    Text("${vitalSign.heartRate} bpm",color = colorResource(id = R.color.dgray))
+                    Text("${vitalSign.bloodPressure} mm Hg",color = colorResource(id = R.color.dgray))
+                    Text("${vitalSign.respiratoryRate} bpm",color = colorResource(id = R.color.dgray))
+
+                }
+            }
         }
     }
 }
@@ -259,6 +321,32 @@ fun PatientDetailScreenPreview() {
         status = "Stable",
         alerts = 1
     )
+
+    // Define mock vital signs data
+    val mockVitalSigns = listOf(
+        VitalSign(
+            date = "2024-08-21",
+            time = "08:00",
+            temperature = 37.5f,
+            heartRate = 80,
+            bloodPressure = "120/80",
+            respiratoryRate = 16
+        ),
+        VitalSign(
+            date = "2024-08-21",
+            time = "14:00",
+            temperature = 37.6f,
+            heartRate = 82,
+            bloodPressure = "122/81",
+            respiratoryRate = 17
+        )
+    )
+
+    // Mock a context and replace JsonUtil loading with mock data
+    val mockContext = LocalContext.current
+    // Create a remember block for the vital signs to simulate loading
+    val vitalSigns = remember { mockVitalSigns }
+
     val mockNavController = rememberNavController()
 
     PatientDetailScreen(patient = mockPatient, navController = mockNavController)

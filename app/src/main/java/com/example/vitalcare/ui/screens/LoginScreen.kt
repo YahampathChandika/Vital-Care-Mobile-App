@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -75,6 +76,7 @@ fun LoginScreen(context: Context, onLoginSuccess: (User) -> Unit = {}) {
                 value = username,
                 onValueChange = { username = it },
                 label = { Text("Username", color = colorResource(id = R.color.black)) },
+                textStyle = TextStyle(color = colorResource(id = R.color.black)),
                 shape = RoundedCornerShape(12.dp),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -85,12 +87,14 @@ fun LoginScreen(context: Context, onLoginSuccess: (User) -> Unit = {}) {
                 value = password,
                 onValueChange = { password = it },
                 label = { Text("Password", color = colorResource(id = R.color.black)) },
+                textStyle = TextStyle(color = colorResource(id = R.color.black)),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 shape = RoundedCornerShape(12.dp),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 30.dp)
             )
+
 
             Button(
                 onClick = {
@@ -121,7 +125,7 @@ fun LoginScreen(context: Context, onLoginSuccess: (User) -> Unit = {}) {
             if (errorMessage.isNotEmpty()) {
                 Text(
                     text = errorMessage,
-                    color = MaterialTheme.colorScheme.error,
+                    color = colorResource(id = R.color.red),
                     modifier = Modifier.padding(top = 8.dp),
                 )
             }

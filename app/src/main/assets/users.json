@@ -1,7 +1,7 @@
 [
         {
             "username": "admin",
-            "password": "1234",
+            "password": "0000",
             "name": "Dr.Alice Johnson",
             "role": "Cardiologist"
         },
@@ -9,6 +9,6 @@
             "username": "doctor",
             "password": "0000",
             "name": "Dr.Bob Smith",
-            "role": "General Practitioner"
+            "role": "Practitioner"
         }
 ]

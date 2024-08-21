@@ -26,10 +26,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -72,7 +74,7 @@ fun DashboardScreen(user: User, navController: NavController) {
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = "Logo",
                 modifier = Modifier
-                    .width(120.dp)
+                    .width(100.dp)
             )
 
             Row(
@@ -82,24 +84,25 @@ fun DashboardScreen(user: User, navController: NavController) {
                     painter = painterResource(id = R.drawable.user),
                     contentDescription = "Profile Picture",
                     modifier = Modifier
-                        .size(40.dp)
+                        .size(35.dp)
                         .clip(CircleShape)
                 )
 
                 Column(
-                    modifier = Modifier.padding(start = 10.dp)
+                    modifier = Modifier.padding(start = 5.dp)
                 ) {
                     Text(
                         text = user.name,
-                        color = colorResource(id = R.color.lblack),
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.W500,
+                        color = colorResource(id = R.color.black),
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.W600,
                     )
 
                     Text(
                         text = user.role,
                         color = colorResource(id = R.color.dgray),
-                        fontSize = 15.sp,
+                        fontSize = 11.sp,
+                        lineHeight = 11.sp
                     )
                 }
             }
@@ -113,7 +116,7 @@ fun DashboardScreen(user: User, navController: NavController) {
             Text(
                 text = "Good Morning, ${user.name.split(" ")[0]}!",
                 color = colorResource(id = R.color.lblack),
-                fontSize = 24.sp,
+                fontSize = 22.sp,
                 fontWeight = FontWeight.W500,
                 modifier = Modifier.padding(bottom = 12.dp)
             )
@@ -121,7 +124,7 @@ fun DashboardScreen(user: User, navController: NavController) {
             Text(
                 text = "Check the latest updates on your account.",
                 color = colorResource(id = R.color.dgray),
-                fontSize = 15.sp,
+                fontSize = 14.sp,
                 modifier = Modifier.padding(bottom = 12.dp)
             )
         }
@@ -130,11 +133,19 @@ fun DashboardScreen(user: User, navController: NavController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 20.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+            verticalAlignment = Alignment.CenterVertically,
+
+
         ) {
             Column(
                 modifier = Modifier
+                    .weight(0.1f)
+                    .shadow(
+                        elevation = 4.dp, // Adjusted shadow size for visibility
+                        shape = RoundedCornerShape(12.dp), // Same radius as border for consistency
+                        clip = false
+                    )
                     .border(
                         width = 2.dp,
                         color = colorResource(id = R.color.white),
@@ -142,17 +153,12 @@ fun DashboardScreen(user: User, navController: NavController) {
                     )
                     .clip(RoundedCornerShape(12.dp)) // Clip to match the border shape
                     .background(color = colorResource(id = R.color.white))
-//                    .shadow(
-//                        elevation = 8.dp, // Shadow size
-//                        shape = RoundedCornerShape(12.dp), // Same radius as border for consistency
-//                        clip = false
-//                    )
                     .padding(
                         horizontal = 14.dp,
                         vertical = 10.dp
                     )
-                    .width(130.dp)
-            ) {
+            )
+            {
                 Text(
                     text = "Patients",
                     color = colorResource(id = R.color.lblack),
@@ -166,7 +172,7 @@ fun DashboardScreen(user: User, navController: NavController) {
                     modifier = Modifier.padding(bottom = 10.dp)
                 )
                 Text(
-                    text = "10",
+                    text = "0${patients.size.toString()}",
                     color = colorResource(id = R.color.lblue),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.W500
@@ -175,6 +181,12 @@ fun DashboardScreen(user: User, navController: NavController) {
 
             Column(
                 modifier = Modifier
+                    .weight(0.1f)
+                    .shadow(
+                        elevation = 4.dp, // Adjusted shadow size for visibility
+                        shape = RoundedCornerShape(12.dp), // Same radius as border for consistency
+                        clip = false
+                    )
                     .border(
                         width = 2.dp,
                         color = colorResource(id = R.color.white),
@@ -182,16 +194,10 @@ fun DashboardScreen(user: User, navController: NavController) {
                     )
                     .clip(RoundedCornerShape(12.dp)) // Clip to match the border shape
                     .background(color = colorResource(id = R.color.white))
-//                    .shadow(
-//                        elevation = 8.dp, // Shadow size
-//                        shape = RoundedCornerShape(12.dp), // Same radius as border for consistency
-//                        clip = false
-//                    )
                     .padding(
                         horizontal = 14.dp,
                         vertical = 10.dp
                     )
-                    .width(130.dp)
             ) {
                 Text(
                     text = "Alerts",
@@ -206,7 +212,7 @@ fun DashboardScreen(user: User, navController: NavController) {
                     modifier = Modifier.padding(bottom = 10.dp)
                 )
                 Text(
-                    text = "08",
+                    text = "0${patients.sumOf { it.alerts }.toString()}",
                     color = colorResource(id = R.color.lblue),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.W500
@@ -217,11 +223,17 @@ fun DashboardScreen(user: User, navController: NavController) {
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
                 modifier = Modifier
+                    .weight(0.1f)
+                    .shadow(
+                        elevation = 4.dp, // Adjusted shadow size for visibility
+                        shape = RoundedCornerShape(12.dp), // Same radius as border for consistency
+                        clip = false
+                    )
                     .border(
                         width = 2.dp,
                         color = colorResource(id = R.color.white),
@@ -229,16 +241,10 @@ fun DashboardScreen(user: User, navController: NavController) {
                     )
                     .clip(RoundedCornerShape(12.dp)) // Clip to match the border shape
                     .background(color = colorResource(id = R.color.white))
-//                    .shadow(
-//                        elevation = 8.dp, // Shadow size
-//                        shape = RoundedCornerShape(12.dp), // Same radius as border for consistency
-//                        clip = false
-//                    )
                     .padding(
                         horizontal = 14.dp,
                         vertical = 10.dp
                     )
-                    .width(130.dp)
             ) {
                 Text(
                     text = "Patients In",
@@ -262,6 +268,12 @@ fun DashboardScreen(user: User, navController: NavController) {
 
             Column(
                 modifier = Modifier
+                    .weight(0.1f)
+                    .shadow(
+                        elevation = 4.dp, // Adjusted shadow size for visibility
+                        shape = RoundedCornerShape(12.dp), // Same radius as border for consistency
+                        clip = false
+                    )
                     .border(
                         width = 2.dp,
                         color = colorResource(id = R.color.white),
@@ -269,16 +281,10 @@ fun DashboardScreen(user: User, navController: NavController) {
                     )
                     .clip(RoundedCornerShape(12.dp)) // Clip to match the border shape
                     .background(color = colorResource(id = R.color.white))
-//                    .shadow(
-//                        elevation = 8.dp, // Shadow size
-//                        shape = RoundedCornerShape(12.dp), // Same radius as border for consistency
-//                        clip = false
-//                    )
                     .padding(
                         horizontal = 14.dp,
                         vertical = 10.dp
                     )
-                    .width(130.dp)
             ) {
                 Text(
                     text = "Patients Out",
@@ -310,6 +316,7 @@ fun DashboardScreen(user: User, navController: NavController) {
                 .fillMaxWidth()
                 .padding(top = 20.dp),
             shape = RoundedCornerShape(12.dp),
+            textStyle = TextStyle(color = colorResource(id = R.color.lblack)),
             trailingIcon = {
                 Icon(
                     imageVector = Icons.Default.Search,
@@ -339,7 +346,7 @@ fun DashboardScreen(user: User, navController: NavController) {
                     text = "Patient Details",
                     color = colorResource(id = R.color.lblack),
                     fontSize = 16.sp,
-                    fontWeight = FontWeight.W500,
+                    fontWeight = FontWeight.W700,
                     modifier = Modifier.padding(vertical = 10.dp)
                 )
 
@@ -413,7 +420,12 @@ fun PatientCard(patient: Patient, onClick: (Patient) -> Unit) {
                         color = colorResource(id = R.color.lblue),
                     )
             }
-            Text(text = patient.name, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+            Text(text =
+                patient.name,
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+                color = colorResource(id = R.color.lblack)
+            )
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -428,7 +440,9 @@ fun PatientCard(patient: Patient, onClick: (Patient) -> Unit) {
                         )
                         Text(
                             text = "0${patient.bed}",
-                            fontSize = 18.sp)
+                            fontSize = 18.sp,
+                            color = colorResource(id = R.color.dgray)
+                        )
                     }
                     Column(
                         Modifier.width(80.dp),
@@ -440,40 +454,11 @@ fun PatientCard(patient: Patient, onClick: (Patient) -> Unit) {
                         )
                         Text(
                             text = patient.diagnosis,
-                            fontSize = 18.sp)
+                            fontSize = 18.sp,
+                            color = colorResource(id = R.color.dgray)
+                        )
                     }
                 }
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 10.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ){
-                Column {
-                    Text(
-                        text = "Age",
-                        color = colorResource(id = R.color.lgray),
-                        modifier = Modifier.padding(top = 10.dp)
-                    )
-                    Text(
-                        text = patient.age.toString(),
-                        fontSize = 18.sp)
-                }
-                Column(
-                    Modifier.width(80.dp)
-                ) {
-                    Text(
-                        text = "Gender",
-                        color = colorResource(id = R.color.lgray),
-                        modifier = Modifier.padding(top = 10.dp)
-                    )
-                    Text(
-                        text = patient.gender,
-                        fontSize = 18.sp)
-                }
-
-            }
         }
     }
 }
